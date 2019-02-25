@@ -1,4 +1,4 @@
-# python-CI-template
+# python-CI
 Python CI template for EC500 Software Engineering
 
 ## Prerequisite
