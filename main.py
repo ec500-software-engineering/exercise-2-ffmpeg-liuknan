@@ -2,7 +2,21 @@ import subprocess
 import os
 import json
 import threading
-ProcessNumber = 5
+import unittest
+import time
+
+class CollisionTestCase(unittest.TestCase):
+    def test_one(self):
+        info_in = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
+                                           '-show_format', 'newvideo.mp4'])  # check output
+        info_in = json.loads(info_in)
+        info_out = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
+                                            '-show_format', './video/out480p.mp4'])
+        info_out = json.loads(info_out)
+        orig_duration = float(info_in['streams'][0]['duration'])  # check if there is any difference
+        new_duration = float(info_out['streams'][0]['duration'])
+        self.assertEqual(orig_duration,new_duration)
+
 
 
 def ffprobe(patin,patout):
@@ -63,4 +77,6 @@ if __name__ == '__main__':
     thread2 = threading.Thread(target=video720, args=(path,))
     thread1.start()
     thread2.start()
+    time.sleep(5)
+    unittest.main()
 
