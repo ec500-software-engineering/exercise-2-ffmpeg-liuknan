@@ -10,7 +10,4 @@ class TestClass(object):
         info_out = json.loads(info_out)
         orig_duration = float(info_in['streams'][0]['duration'])  # check if there is any difference
         new_duration = float(info_out['streams'][0]['duration'])
-        if orig_duration == new_duration:
-            return True
-        else:
-            return False
+        assert orig_duration == new_duration
