@@ -26,7 +26,7 @@ def video480(pathin):
         subprocess.check_call(cmd)
     except OSError:
         return False
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         return False
     result = ffprobe(path, "./video/out480p.mp4")   # get the result of duration check
     if result:
@@ -59,8 +59,8 @@ if __name__ == '__main__':
     path = "newvideo.mp4"
     if not os.path.exists('./video/'):
         os.mkdir('./video/')
-    thread1 = threading.Thread(target=video480, args=(path))  # two threads
-    thread2 = threading.Thread(target=video720, args=(path))
+    thread1 = threading.Thread(target=video480, args=(path,))  # two threads
+    thread2 = threading.Thread(target=video720, args=(path,))
     thread1.start()
     thread2.start()
 
