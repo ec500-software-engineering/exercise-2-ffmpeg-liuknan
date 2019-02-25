@@ -1,7 +1,10 @@
 import subprocess
 import json
+import os
 class TestClass(object):
     def test_one(self):
+        while not (os.path.exists('./video/out480p.mp4')):
+            pass
         info_in = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
                                            '-show_format', 'newvideo.mp4'])  # check output
         info_in = json.loads(info_in)
