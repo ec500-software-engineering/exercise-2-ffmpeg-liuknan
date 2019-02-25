@@ -1,7 +1,6 @@
 import subprocess
 import json
 import os
-import main
 class TestClass(object):
     def test_one(self):
         while not (os.path.exists('./video/out480p.mp4')):
