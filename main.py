@@ -46,7 +46,7 @@ def video480(pathin):
         return False
     except subprocess.CalledProcessError:
         return False
-    time.sleep(2)
+    time.sleep(3)
     result = ffprobe(path, './video/out480p_0.mp4')   # get the result of duration check
     i = i + 1
     if result:
@@ -66,7 +66,7 @@ def video720(pathin):
         return False
     except subprocess.CalledProcessError:
         return False
-    time.sleep(2)
+    time.sleep(3)
     j = j + 1
     if ffprobe(path, './video/out720p_0.mp4'):
         print("Success")

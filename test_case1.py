@@ -9,7 +9,7 @@ class TestClass(object):
                                            '-show_format', 'newvideo.mp4'])  # check output
         info_in = json.loads(info_in)
         info_out = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
-                                            '-show_format', './video/out480p.mp4'])
+                                            '-show_format', './video/out480p_0.mp4'])
         info_out = json.loads(info_out)
         orig_duration = float(info_in['streams'][0]['duration'])  # check if there is any difference
         new_duration = float(info_out['streams'][0]['duration'])
