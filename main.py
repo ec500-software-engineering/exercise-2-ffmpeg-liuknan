@@ -4,6 +4,9 @@ import json
 import threading
 import unittest
 import time
+from queue import Queue
+i = 0
+j = 0
 
 class CollisionTestCase(unittest.TestCase):
     def test_one(self):
@@ -35,15 +38,17 @@ def ffprobe(patin,patout):
 
 
 def video480(pathin):
-    cmd = ['ffmpeg', '-i', pathin,'-r', '30', '-y', '-s', 'hd480', './video/out480p.mp4']  # encode
+    global i
+    cmd = ['ffmpeg', '-i', pathin,'-r', '30', '-y', '-s', 'hd480', './video/out480p_'+str(i)+'.mp4']  # encode
     try:
-        subprocess.check_call(cmd)
+        subprocess.Popen(cmd)
     except OSError:
         return False
     except subprocess.CalledProcessError:
         return False
     result = ffprobe(path, "./video/out480p.mp4")   # get the result of duration check
     if result:
+        i = i+1
         print("Success")
         return True
     else:
@@ -52,15 +57,17 @@ def video480(pathin):
 
 
 def video720(pathin):
-    cmd = ['ffmpeg', '-i', pathin,'-r', '30', '-y', '-s', 'hd720', './video/out720p.mp4']
+    global j
+    cmd = ['ffmpeg', '-i', pathin,'-r', '30', '-y', '-s', 'hd720', './video/out720p'+str(j)+'.mp4']
     try:
-        subprocess.run(cmd)
+        subprocess.Popen(cmd)
     except OSError:
         return False
     # except subprocess.CalledProcessError as e:
     #     return False
 
     if ffprobe(path, "./video/out720p.mp4"):
+        j = j+1
         print("Success")
         return True
     else:
@@ -70,13 +77,16 @@ def video720(pathin):
 
 
 if __name__ == '__main__':
-    path = "newvideo.mp4"
+    input_Q = Queue()
     if not os.path.exists('./video/'):
         os.mkdir('./video/')
-    thread1 = threading.Thread(target=video480, args=(path,))  # two threads
-    thread2 = threading.Thread(target=video720, args=(path,))
-    thread1.start()
-    thread2.start()
-    time.sleep(5)
-    unittest.main()
+    while True:
+        input_Q.put('./newvideo.mp4')
+        path = input_Q.get()
+        thread1 = threading.Thread(target=video480, args=(path,))  # two threads
+        thread2 = threading.Thread(target=video720, args=(path,))
+        thread1.start()
+        thread2.start()
+        # time.sleep(5)
+        # unittest.main()
 
