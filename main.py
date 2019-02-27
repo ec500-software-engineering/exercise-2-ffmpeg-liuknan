@@ -30,20 +30,17 @@ class Video():
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd480', self.v4output_path]  # encode
         VL = subprocess.Popen(cmd)
         self.i = self.i + 1
-        subprocess.Popen.poll(VL)
-        while VL.returncode:
-            pass
+        VL.wait()
         print("Finish video480\n")
         return 0
 
     def video720(self, pathin):
-        self.v7output_path = './video/out720p_'+str(self.j)+'.mp4'
-        cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd720', self.v7output_path]
+        output_path = './video/out720p_'+str(self.j)+'.mp4'
+
+        cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd720', output_path]
         VH = subprocess.Popen(cmd)
         self.j = self.j + 1
-        subprocess.Popen.poll(VH)
-        while VH.returncode:
-            pass
+        VH.wait()
         print("Finish video720\n")
         return 0
 

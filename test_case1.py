@@ -3,8 +3,7 @@ from queue import Queue
 from main import Video
 
 
-class TestClass(object):
-    def test_one(self):
+def test_one():
         V = Video()
         input_q = Queue()
         if not os.path.exists('./video/'):
