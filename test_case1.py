@@ -1,17 +1,19 @@
-import subprocess
-import json
 import os
+from queue import Queue
+from main import Video
+
+
 class TestClass(object):
     def test_one(self):
-        while not (os.path.exists('./video/out480p_0.mp4')):
+        V = Video()
+        input_q = Queue()
+        if not os.path.exists('./video/'):
+            os.mkdir('./video/')
+        input_q.put('./newvideo.mp4')
+        path = input_q.get()
+        v4 = V.video480(path)
+        while v4:
             pass
-        info_in = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
-                                           '-show_format', 'newvideo.mp4'])  # check output
-        info_in = json.loads(info_in)
-        info_out = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
-                                            '-show_format', './video/out480p_0.mp4'])
-        info_out = json.loads(info_out)
-        orig_duration = float(info_in['streams'][0]['duration'])  # check if there is any difference
-        new_duration = float(info_out['streams'][0]['duration'])
-        assert orig_duration == new_duration
+        result = V.ffprobe(path, V.v4output_path)
+        assert result
 
