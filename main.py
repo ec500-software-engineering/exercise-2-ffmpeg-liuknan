@@ -5,8 +5,6 @@ import threading
 import unittest
 import time
 from queue import Queue
-i = 0
-j = 0
 
 
 class CollisionTestCase(unittest.TestCase):
@@ -80,6 +78,8 @@ def video720(pathin):
 
 if __name__ == '__main__':
     input_Q = Queue()
+    i = 0
+    j = 0
     if not os.path.exists('./video/'):
         os.mkdir('./video/')
     while True:
@@ -89,6 +89,6 @@ if __name__ == '__main__':
         thread2 = threading.Thread(target=video720, args=(path,))
         thread1.start()
         thread2.start()
-        # time.sleep(5)
+        time.sleep(5)
         # unittest.main()
 
