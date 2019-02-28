@@ -6,10 +6,10 @@ from queue import Queue
 
 class Video():
     def __init__(self):
-        self.i = 0
-        self.j = 0
-        self.v4output_path = ''
-        self.v7output_path = ''
+        self.i = 0  # counter for video480
+        self.j = 0  # counter for video720
+        self.v4output_path = ''  # output path for video 480
+        self.v7output_path = ''  # output path for video 720
 
     def ffprobe(self, patin, patout):
         info_in = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
@@ -26,11 +26,11 @@ class Video():
             return False
 
     def video480(self, pathin):
-        self.v4output_path = './video/out480p_'+str(self.i)+'.mp4'
+        self.v4output_path = './video/out480p_'+str(self.i)+'.mp4'  # update the output path
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd480', self.v4output_path]  # encode
-        VL = subprocess.Popen(cmd)
-        self.i = self.i + 1
-        VL.wait()
+        VL = subprocess.Popen(cmd)  # convert
+        self.i = self.i + 1  # counter + 1
+        VL.wait()  # wait until the child process is done
         print("Finish video480\n")
         return 0
 

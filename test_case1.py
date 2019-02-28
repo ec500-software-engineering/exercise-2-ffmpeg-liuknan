@@ -13,6 +13,6 @@ def test_one():
         v4 = V.video480(path)
         while v4:
             pass
-        result = V.ffprobe(path, V.v4output_path)
+        result = V.ffprobe(path, V.v4output_path)  # check the duration
         assert result
 
