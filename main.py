@@ -35,9 +35,9 @@ class Video():
         return 0
 
     def video720(self, pathin):
-        output_path = './video/out720p_'+str(self.j)+'.mp4'
+        self.v7output_path = './video/out720p_'+str(self.j)+'.mp4'
 
-        cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd720', output_path]
+        cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd720', self.v7output_path]
         VH = subprocess.Popen(cmd)
         self.j = self.j + 1
         VH.wait()
