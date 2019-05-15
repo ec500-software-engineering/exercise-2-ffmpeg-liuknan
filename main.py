@@ -2,6 +2,7 @@ import subprocess
 import os
 import json
 from queue import Queue
+import multiprocessing
 
 
 class Video:
@@ -44,6 +45,13 @@ class Video:
         print("Finish video720\n")
         return 0
 
+    def convert(self, path):
+        pool = multiprocessing.Pool()
+        pool.apply_async(self.video480, args=(path,))
+        pool.apply_async(self.video720, args=(path,))
+        pool.close()
+        pool.join()
+
 
 if __name__ == '__main__':
     input_Q = Queue()
@@ -54,8 +62,7 @@ if __name__ == '__main__':
     while True:
         while not input_Q.empty():
             path = input_Q.get()
-            V.video480(path)
-            V.video720(path)
+            V.convert(path)
     # while V4 or V7:
     #     pass
     # unittest.main()
