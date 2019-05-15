@@ -12,7 +12,6 @@ class Video:
         self.v4output_path = ''  # output path for video 480
         self.v7output_path = ''  # output path for video 720
 
-    @staticmethod    
     def ffprobe(self, patin, patout):
         info_in = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
                                            '-show_format', patin], universal_newlines=True)  # check output
