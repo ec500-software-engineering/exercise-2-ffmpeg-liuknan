@@ -12,6 +12,7 @@ class Video:
         self.v4output_path = ''  # output path for video 480
         self.v7output_path = ''  # output path for video 720
 
+    @staticmethod    
     def ffprobe(self, patin, patout):
         info_in = subprocess.check_output(['ffprobe', '-v', 'warning', '-print_format', 'json', '-show_streams',
                                            '-show_format', patin], universal_newlines=True)  # check output
@@ -46,11 +47,11 @@ class Video:
         return 0
 
     def convert(self, path):
-        pool = multiprocessing.Pool()
-        pool.apply_async(self.video480, args=(path,))
-        pool.apply_async(self.video720, args=(path,))
+        pool = multiprocessing.Pool()  # create a processing poll
+        pool.apply_async(self.video480, args=(path,))  # apply 480p function
+        pool.apply_async(self.video720, args=(path,))  # apply 720p function
         pool.close()
-        pool.join()
+        pool.join()  # wait
 
 
 if __name__ == '__main__':
