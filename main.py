@@ -1,7 +1,6 @@
 import subprocess
 import os
 import json
-import threading
 from queue import Queue
 
 
