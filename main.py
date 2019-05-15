@@ -31,9 +31,13 @@ class Video:
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd480', self.v4output_path]  # encode
         vl = subprocess.Popen(cmd)  # convert
         self.i = self.i + 1  # counter + 1
-        vl.wait()  # wait until the child process is done
-        print("Finish video480\n")
-        return 0
+        ret = vl.wait()  # wait until the child process is done
+        print(ret)
+        if not ret == 0:
+            print("Error occurred")
+        else:
+            print("Finish video480\n")
+            return 0
 
     def video720(self, pathin):
         self.v7output_path = './video/out720p_'+str(self.j)+'.mp4'
@@ -41,9 +45,12 @@ class Video:
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd720', self.v7output_path]
         vh = subprocess.Popen(cmd)
         self.j = self.j + 1
-        vh.wait()
-        print("Finish video720\n")
-        return 0
+        ret = vh.wait()
+        if not ret == 0:
+            print("Error occurred")
+        else:
+            print("Finish video720\n")
+            return 0
 
     def convert(self, path):
         pool = multiprocessing.Pool()  # create a processing poll
@@ -58,7 +65,7 @@ if __name__ == '__main__':
     if not os.path.exists('./video/'):
         os.mkdir('./video/')
     V = Video()
-    input_Q.put('./newvideo.mp4')
+    input_Q.put('./newvide1o.mp4')
     while True:
         while not input_Q.empty():
             path = input_Q.get()
