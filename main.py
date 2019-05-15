@@ -52,12 +52,11 @@ if __name__ == '__main__':
         os.mkdir('./video/')
     V = Video()
     input_Q.put('./newvideo.mp4')
-    path = input_Q.get()
-
-    V4 = threading.Thread(target=V.video480, args=(path,))
-    V7 = threading.Thread(target=V.video720, args=(path,))
-    V4.start()
-    V7.start()
+    while True:
+        while not input_Q.empty():
+            path = input_Q.get()
+            V.video480(path)
+            V.video720(path)
     # while V4 or V7:
     #     pass
     # unittest.main()
