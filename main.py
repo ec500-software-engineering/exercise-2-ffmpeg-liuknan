@@ -32,7 +32,6 @@ class Video:
         vl = subprocess.Popen(cmd)  # convert
         self.i = self.i + 1  # counter + 1
         ret = vl.wait()  # wait until the child process is done
-        print(ret)
         if not ret == 0:
             print("Error occurred")
         else:
