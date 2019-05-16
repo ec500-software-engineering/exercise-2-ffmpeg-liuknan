@@ -87,7 +87,12 @@ class Video:
         Files = os.listdir()  # list documents
         for file in Files:
             file_name_list = file.split('.')  # check .mp4 file
-            if file_name_list[-1] == 'mp4' :
+            if file_name_list[-1] == 'mp4'\
+                    or file_name_list[-1] == '.mp4'\
+                    or file_name_list[-1] == '.avi'\
+                    or file_name_list[-1] == '.wmv'\
+                    or file_name_list[-1] == '.flv'\
+                    or file_name_list[-1] == '.mov':
                 v4 = threading.Thread(target=self.video480, args=(file,))  # convert to 480p
                 v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
                 v4.start()
