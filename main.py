@@ -63,11 +63,14 @@ class Video:
                 v7 = threading.Thread(target=self.video720, args=(file,))
                 v4.start()
                 v7.start()
+                # v4.join()
+                # v7.join()
 
 
 if __name__ == '__main__':
     V = Video()
-    V.convert()
+    while True:
+        V.convert()
     # while V4 or V7:
     #     pass
     # unittest.main()
