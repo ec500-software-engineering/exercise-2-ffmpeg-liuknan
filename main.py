@@ -1,8 +1,7 @@
 import subprocess
 import os
 import json
-from queue import Queue
-import multiprocessing
+import threading
 
 
 class Video:
@@ -27,7 +26,9 @@ class Video:
             return False
 
     def video480(self, pathin):
-        self.v4output_path = './video/out480p_'+str(self.i)+'.mp4'  # update the output path
+        if not os.path.exists('./video/'):
+            os.mkdir('./video/')
+        self.v4output_path = "./video/"+pathin[:-4]+"480p.mp4"  # update the output path
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd480', self.v4output_path]  # encode
         vl = subprocess.Popen(cmd)  # convert
         self.i = self.i + 1  # counter + 1
@@ -39,7 +40,9 @@ class Video:
             return 0
 
     def video720(self, pathin):
-        self.v7output_path = './video/out720p_'+str(self.j)+'.mp4'
+        if not os.path.exists('./video/'):
+            os.mkdir('./video/')
+        self.v7output_path = "./video/"+pathin[:-4]+"720p.mp4"
 
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd720', self.v7output_path]
         vh = subprocess.Popen(cmd)
@@ -51,24 +54,20 @@ class Video:
             print("Finish video720\n")
             return 0
 
-    def convert(self, path):
-        pool = multiprocessing.Pool()  # create a processing poll
-        pool.apply_async(self.video480, args=(path,))  # apply 480p function
-        pool.apply_async(self.video720, args=(path,))  # apply 720p function
-        pool.close()
-        pool.join()  # wait
+    def convert(self):
+        Files = os.listdir()
+        for file in Files:
+            file_name_list = file.split('.')
+            if file_name_list[-1] == 'mp4' :
+                v4 = threading.Thread(target=self.video480, args=(file,))
+                v7 = threading.Thread(target=self.video720, args=(file,))
+                v4.start()
+                v7.start()
 
 
 if __name__ == '__main__':
-    input_Q = Queue()
-    if not os.path.exists('./video/'):
-        os.mkdir('./video/')
     V = Video()
-    input_Q.put('./newvide1o.mp4')
-    while True:
-        while not input_Q.empty():
-            path = input_Q.get()
-            V.convert(path)
+    V.convert()
     # while V4 or V7:
     #     pass
     # unittest.main()
