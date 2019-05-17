@@ -9,6 +9,6 @@ This program could convert an video to both 480p and 720p. And there are two fun
 
 ![1](https://github.com/ec500-software-engineering/exercise-2-ffmpeg-liuknan/raw/master/architecture.png)
 ## Estimation
-For single program, it will use 30% of the CPU. When the number of programs comes to 6, they will take up 80% of cpu.
+When I try to generate as many as processes as I can, it could use 167% of CPU, which is 87% of all CPU usage.
 ![1](https://github.com/ec500-software-engineering/exercise-2-ffmpeg-liuknan/raw/master/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-02-27%20%E4%B8%8B%E5%8D%8811.03.58.png)
-![2](https://github.com/ec500-software-engineering/exercise-2-ffmpeg-liuknan/raw/master/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-02-27%20%E4%B8%8B%E5%8D%8811.05.19.png)
+![2](https://github.com/ec500-software-engineering/exercise-2-ffmpeg-liuknan/raw/master/cpu.png)
