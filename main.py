@@ -87,15 +87,14 @@ class Video:
         get files from input queue and convert them.
         :return:no return.
         """
-        while True:
-            while not self.inputqueue.empty():
-                file = self.inputqueue.get_nowait()
-                v4 = threading.Thread(target=self.video480, args=(file,))  # convert to 480p
-                v4.start()
-                v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
-                v7.start()
-                # v4.join()
-                # v7.join()
+        while not self.inputqueue.empty():
+            file = self.inputqueue.get_nowait()
+            v4 = threading.Thread(target=self.video480, args=(file,))  # convert to 480p
+            v4.start()
+            v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
+            v7.start()
+            # v4.join()
+            # v7.join()
 
     def input(self):
         """
@@ -119,8 +118,8 @@ class Video:
         :return: no return
         """
         inputthread = threading.Thread(target=self.input)
-        convertthread = threading.Thread(target=self.convert)
         inputthread.start()
+        convertthread = threading.Thread(target=self.convert)
         convertthread.start()
 
 
