@@ -101,6 +101,8 @@ class Video:
         input queue
         :return: no return
         """
+        if not os.path.exists('./video/'):  # create output folder
+            os.mkdir('./video/')
         Files = os.listdir()  # list documents
         for file in Files:
             file_name_list = file.split('.')  # check .mp4 file
