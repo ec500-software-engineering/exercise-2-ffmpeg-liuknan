@@ -87,6 +87,8 @@ class Video:
         get files from input queue and convert them.
         :return:no return.
         """
+        while self.inputqueue.empty():
+            pass
         while not self.inputqueue.empty():
             file = self.inputqueue.get()
             v4 = threading.Thread(target=self.video480, args=(file,))  # convert to 480p
