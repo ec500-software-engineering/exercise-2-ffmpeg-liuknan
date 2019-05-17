@@ -130,9 +130,9 @@ class Video:
         """
         inputthread = threading.Thread(target=self.input)  # input
         inputthread.start()
+        inputthread.join()  # wait for inputting all files
         convertthread = threading.Thread(target=self.convert)  # conversion
         convertthread.start()
-        inputthread.join()  # wait for inputting all files
         convertthread.join()  # wait for converting all files
         print("Program Finished")
 
