@@ -95,8 +95,9 @@ class Video:
             v4.start()
             v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
             v7.start()
-            # v4.join()
-            # v7.join()
+            v4.join()
+            v7.join()
+        print("Conversion Finished")
 
     def input(self):
         """
@@ -125,6 +126,9 @@ class Video:
         inputthread.start()
         convertthread = threading.Thread(target=self.convert)
         convertthread.start()
+        inputthread.join()
+        convertthread.join()
+        print("Program Finished")
 
 
 if __name__ == '__main__':
