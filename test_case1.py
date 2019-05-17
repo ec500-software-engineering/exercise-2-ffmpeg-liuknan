@@ -12,9 +12,7 @@ def test_one():
     :return:  no return
     """
     v = Video()
-    t = threading.Thread(target=v.start)  # convert video
-    t.start()
-    t.join()
+    v.start()
     files = os.listdir("./video/")  # find output files
     for file in files:  # check duration
         result = v.ffprobe(file[:-8]+".mp4","./video/"+file)  # check the duration

@@ -21,7 +21,8 @@ class Video:
         self.v4output_path = ''  # output path for video 480
         self.v7output_path = ''  # output path for video 720
         self.inputqueue = Queue()
-
+        self.counter1 = 0  # counter for files
+        self.counter2 = 0  # counter for finished tasks
 
     def ffprobe(self, patin, patout):
         """
@@ -56,6 +57,7 @@ class Video:
         vl = subprocess.Popen(cmd)  # convert
         self.i = self.i + 1  # counter + 1
         ret = vl.wait()  # wait until the child process is done
+        self.counter2 += 0.5
         if not ret == 0:  # error detect
             print("Error occurred")
         else:
@@ -76,6 +78,7 @@ class Video:
         vh = subprocess.Popen(cmd)  # crate process
         self.j = self.j + 1  # counter
         ret = vh.wait()  # wait
+        self.counter2 += 0.5
         if not ret == 0:
             print("Error occurred")
         else:
@@ -95,8 +98,10 @@ class Video:
             v4.start()
             v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
             v7.start()
-            v4.join()
-            v7.join()
+            # v4.join()
+            # v7.join()
+        while self.counter1 != self.counter2 or self.counter1 == 0:
+            pass
         print("Conversion Finished")
 
     def input(self):
@@ -116,6 +121,7 @@ class Video:
                     or file_name_list[-1] == '.flv' \
                     or file_name_list[-1] == '.mov':
                 self.inputqueue.put(file)
+                self.counter1 += 1
 
     def start(self):
         """
