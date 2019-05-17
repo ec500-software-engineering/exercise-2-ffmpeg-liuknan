@@ -7,6 +7,7 @@ import subprocess
 import os
 import json
 import threading
+from queue import Queue
 
 
 class Video:
@@ -19,6 +20,8 @@ class Video:
         self.j = 0  # counter for video720
         self.v4output_path = ''  # output path for video 480
         self.v7output_path = ''  # output path for video 720
+        self.inputqueue = Queue()
+
 
     def ffprobe(self, patin, patout):
         """
@@ -81,30 +84,49 @@ class Video:
 
     def convert(self):
         """
-        List files in the directory and convert all mp4 files to 480p and 720p.
+        get files from input queue and convert them.
         :return:no return.
         """
-        Files = os.listdir()  # list documents
-        for file in Files:
-            file_name_list = file.split('.')  # check .mp4 file
-            if file_name_list[-1] == 'mp4'\
-                    or file_name_list[-1] == '.mp4'\
-                    or file_name_list[-1] == '.avi'\
-                    or file_name_list[-1] == '.wmv'\
-                    or file_name_list[-1] == '.flv'\
-                    or file_name_list[-1] == '.mov':
+        while True:
+            while not self.inputqueue.empty():
+                file = self.inputqueue.get_nowait()
                 v4 = threading.Thread(target=self.video480, args=(file,))  # convert to 480p
-                v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
                 v4.start()
+                v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
                 v7.start()
                 # v4.join()
                 # v7.join()
 
+    def input(self):
+        """
+        input queue
+        :return: no return
+        """
+        Files = os.listdir()  # list documents
+        for file in Files:
+            file_name_list = file.split('.')  # check .mp4 file
+            if file_name_list[-1] == 'mp4' \
+                    or file_name_list[-1] == '.mp4' \
+                    or file_name_list[-1] == '.avi' \
+                    or file_name_list[-1] == '.wmv' \
+                    or file_name_list[-1] == '.flv' \
+                    or file_name_list[-1] == '.mov':
+                self.inputqueue.put(file)
+
+    def start(self):
+        """
+        start the whole program
+        :return: no return
+        """
+        inputthread = threading.Thread(target=self.input)
+        convertthread = threading.Thread(target=self.convert)
+        inputthread.start()
+        convertthread.start()
+
 
 if __name__ == '__main__':
     V = Video()
-    while True:
-        V.convert()
+    V.start()
     # while V4 or V7:
     #     pass
     # unittest.main()

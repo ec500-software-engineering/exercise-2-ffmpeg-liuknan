@@ -11,7 +11,9 @@ def test_one():
     :return:  no return
     """
     v = Video()
-    v.convert()  # convert video
+    v.start()  # convert video
+    while not os.path.exists("./video"):
+        pass
     files = os.listdir("./video/")  # find output files
     for file in files:  # check duration
         result = v.ffprobe(file[:-8]+".mp4","./video/"+file)  # check the duration
