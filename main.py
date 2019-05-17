@@ -128,12 +128,12 @@ class Video:
         start the whole program
         :return: no return
         """
-        inputthread = threading.Thread(target=self.input)
+        inputthread = threading.Thread(target=self.input)  # input
         inputthread.start()
-        convertthread = threading.Thread(target=self.convert)
+        convertthread = threading.Thread(target=self.convert)  # conversion
         convertthread.start()
-        inputthread.join()
-        convertthread.join()
+        inputthread.join()  # wait for inputting all files
+        convertthread.join()  # wait for converting all files
         print("Program Finished")
 
 
