@@ -3,7 +3,6 @@ This test will test the duration of input file and output file.
 """
 import os
 from main import Video
-import threading
 
 
 def test_one():
