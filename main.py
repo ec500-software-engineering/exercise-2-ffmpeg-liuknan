@@ -88,7 +88,7 @@ class Video:
         :return:no return.
         """
         while not self.inputqueue.empty():
-            file = self.inputqueue.get_nowait()
+            file = self.inputqueue.get()
             v4 = threading.Thread(target=self.video480, args=(file,))  # convert to 480p
             v4.start()
             v7 = threading.Thread(target=self.video720, args=(file,))  # convert to 720p
