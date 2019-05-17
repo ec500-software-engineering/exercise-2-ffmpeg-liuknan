@@ -14,6 +14,6 @@ def test_one():
     v.start()
     files = os.listdir("./video/")  # find output files
     for file in files:  # check duration
-        result = v.ffprobe(file[:-8]+".mp4","./video/"+file)  # check the duration
+        result = v.ffprobe(file[:-9]+".mp4","./video/"+file)  # check the duration
         assert result  # if input and output durations are not equal, assert error
 

@@ -52,7 +52,7 @@ class Video:
         """
         if not os.path.exists('./video/'):  # create output folder
             os.mkdir('./video/')
-        self.v4output_path = "./video/"+pathin[:-4]+"480p.mp4"  # update the output path
+        self.v4output_path = "./video/"+pathin[:-4]+"_480p.mp4"  # update the output path
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd480', self.v4output_path]  # encode
         vl = subprocess.Popen(cmd)  # convert
         self.i = self.i + 1  # counter + 1
@@ -72,7 +72,7 @@ class Video:
         """
         if not os.path.exists('./video/'):  # create output folder
             os.mkdir('./video/')
-        self.v7output_path = "./video/"+pathin[:-4]+"720p.mp4"  # output path
+        self.v7output_path = "./video/"+pathin[:-4]+"_720p.mp4"  # output path
 
         cmd = ['ffmpeg', '-i', pathin, '-r', '30', '-y', '-s', 'hd720', self.v7output_path]  # ffmpeg command
         vh = subprocess.Popen(cmd)  # crate process
