@@ -8,6 +8,7 @@ import os
 import json
 import threading
 from queue import Queue
+import sys
 
 
 class Video:
@@ -90,8 +91,8 @@ class Video:
         get files from input queue and convert them.
         :return:no return.
         """
-        while self.inputqueue.empty():
-            pass
+        # while self.inputqueue.empty():
+        #     pass
         while not self.inputqueue.empty():
             file = self.inputqueue.get()
             v4 = threading.Thread(target=self.video480, args=(file,))  # convert to 480p
@@ -100,7 +101,10 @@ class Video:
             v7.start()
             # v4.join()
             # v7.join()
-        while self.counter1 != self.counter2 or self.counter1 == 0:
+        if self.counter1 == self.counter2 == 0:
+            print("no input file")
+            sys.exit(0)
+        while self.counter1 != self.counter2:
             pass
         print("Conversion Finished")
 
@@ -115,13 +119,13 @@ class Video:
         for file in Files:
             file_name_list = file.split('.')  # check .mp4 file
             if file_name_list[-1] == 'mp4' \
-                    or file_name_list[-1] == '.mp4' \
                     or file_name_list[-1] == '.avi' \
                     or file_name_list[-1] == '.wmv' \
                     or file_name_list[-1] == '.flv' \
                     or file_name_list[-1] == '.mov':
                 self.inputqueue.put(file)
                 self.counter1 += 1
+        print("input finished")
 
     def start(self):
         """
